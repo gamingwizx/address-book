@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "phone": "+1-555-123-4567",
+    "address": "123 Main St, New York, NY 10001"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "janesmith@example.com",
+    "phone": "+1-555-987-6543",
+    "address": "456 Elm St, Los Angeles, CA 90012"
+  },
+  {
+    "id": 3,
+    "name": "Michael Johnson",
+    "email": "michael.johnson@example.com",
+    "phone": "+1-555-222-3333",
+    "address": "789 Oak St, Chicago, IL 60614"
+  },
+  {
+    "id": 4,
+    "name": "Emily Brown",
+    "email": "emily.brown@example.com",
+    "phone": "+1-555-444-5555",
+    "address": "321 Pine St, San Francisco, CA 94102"
+  },
+  {
+    "id": 5,
+    "name": "David Wilson",
+    "email": "david.wilson@example.com",
+    "phone": "+1-555-666-7777",
+    "address": "654 Maple St, Miami, FL 33101"
+  },
+  {
+    "id": 6,
+    "name": "Sarah Miller",
+    "email": "sarah.miller@example.com",
+    "phone": "+1-555-888-9999",
+    "address": "987 Cedar St, Seattle, WA 98101"
+  },
+  {
+    "id": 7,
+    "name": "James Anderson",
+    "email": "james.anderson@example.com",
+    "phone": "+1-555-111-2222",
+    "address": "741 Birch St, Denver, CO 80203"
+  },
+  {
+    "id": 8,
+    "name": "Jessica Martinez",
+    "email": "jessica.martinez@example.com",
+    "phone": "+1-555-333-4444",
+    "address": "159 Spruce St, Austin, TX 78701"
+  },
+  {
+    "id": 9,
+    "name": "Christopher Lee",
+    "email": "christopher.lee@example.com",
+    "phone": "+1-555-555-6666",
+    "address": "852 Redwood St, Boston, MA 02108"
+  },
+  {
+    "id": 10,
+    "name": "Amanda Thomas",
+    "email": "amanda.thomas@example.com",
+    "phone": "+1-555-777-8888",
+    "address": "369 Willow St, Portland, OR 97201"
+  },
+  {
+    "id": 11,
+    "name": "Daniel White",
+    "email": "daniel.white@example.com",
+    "phone": "+1-555-999-0000",
+    "address": "753 Poplar St, Dallas, TX 75201"
+  },
+  {
+    "id": 12,
+    "name": "Olivia Harris",
+    "email": "olivia.harris@example.com",
+    "phone": "+1-555-222-5555",
+    "address": "258 Sycamore St, Atlanta, GA 30301"
+  },
+  {
+    "id": 13,
+    "name": "Matthew Robinson",
+    "email": "matthew.robinson@example.com",
+    "phone": "+1-555-444-7777",
+    "address": "147 Magnolia St, Houston, TX 77002"
+  },
+  {
+    "id": 14,
+    "name": "Sophia Clark",
+    "email": "sophia.clark@example.com",
+    "phone": "+1-555-666-9999",
+    "address": "369 Aspen St, Phoenix, AZ 85001"
+  },
+  {
+    "id": 15,
+    "name": "Ethan Walker",
+    "email": "ethan.walker@example.com",
+    "phone": "+1-555-888-1111",
+    "address": "951 Palm St, San Diego, CA 92101"
+  },
+  {
+    "id": 16,
+    "name": "Ava Hall",
+    "email": "ava.hall@example.com",
+    "phone": "+1-555-333-6666",
+    "address": "753 Hickory St, Nashville, TN 37201"
+  },
+  {
+    "id": 17,
+    "name": "William Allen",
+    "email": "william.allen@example.com",
+    "phone": "+1-555-555-7777",
+    "address": "147 Laurel St, Columbus, OH 43201"
+  },
+  {
+    "id": 18,
+    "name": "Isabella Young",
+    "email": "isabella.young@example.com",
+    "phone": "+1-555-777-9999",
+    "address": "258 Chestnut St, Indianapolis, IN 46201"
+  },
+  {
+    "id": 19,
+    "name": "Liam Scott",
+    "email": "liam.scott@example.com",
+    "phone": "+1-555-999-2222",
+    "address": "951 Fir St, Charlotte, NC 28201"
+  },
+  {
+    "id": 20,
+    "name": "Mia Adams",
+    "email": "mia.adams@example.com",
+    "phone": "+1-555-222-4444",
+    "address": "753 Beech St, San Antonio, TX 78201"
+  },
+  {
+    "id": 21,
+    "name": "Benjamin Nelson",
+    "email": "benjamin.nelson@example.com",
+    "phone": "+1-555-444-6666",
+    "address": "369 Dogwood St, Kansas City, MO 64101"
+  },
+  {
+    "id": 22,
+    "name": "Charlotte Carter",
+    "email": "charlotte.carter@example.com",
+    "phone": "+1-555-666-8888",
+    "address": "147 Ash St, Jacksonville, FL 32201"
+  },
+  {
+    "id": 23,
+    "name": "Mason Mitchell",
+    "email": "mason.mitchell@example.com",
+    "phone": "+1-555-888-0000",
+    "address": "258 Maplewood St, Memphis, TN 38101"
+  },
+  {
+    "id": 24,
+    "name": "Harper Perez",
+    "email": "harper.perez@example.com",
+    "phone": "+1-555-333-5555",
+    "address": "951 Aspenwood St, Louisville, KY 40201"
+  },
+  {
+    "id": 25,
+    "name": "Elijah Stewart",
+    "email": "elijah.stewart@example.com",
+    "phone": "+1-555-555-8888",
+    "address": "753 Cottonwood St, Oklahoma City, OK 73101"
+  }
+]
