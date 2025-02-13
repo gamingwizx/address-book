@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import SearchButton from "./SearchButton"
 import { useDispatch } from "react-redux"
-import { search } from "./ContactSlice"
+import { search } from "./redux/ContactSlice"
+import {jumpToPage} from "./redux/paginationSlice"
 import mediaQueryBreakpoint from "../../utils/mediaQuery"
 
 const StyledSearch = styled.input`
@@ -37,9 +38,14 @@ export default function Search() {
 
     const dispatch = useDispatch()
 
+    const handleSearch = (e) => {
+        dispatch(search(e.target.value))
+        dispatch(jumpToPage(1))
+    }
+
     return (
         <StyledSearchParent>
-            <StyledSearch onChange={(e) => dispatch(search(e.target.value))}/>
+            <StyledSearch onChange={handleSearch} />
             <SearchButton/>
 
         </StyledSearchParent>

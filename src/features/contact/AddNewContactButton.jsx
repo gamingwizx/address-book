@@ -1,5 +1,5 @@
-import Modal from "../../ui/Modal"
-import Button from "./components/Button"
+import Modal from "../../components/Modal"
+import Button from "../../components/Button"
 import AddNewContact from "./AddNewContact"
 function AddNewContactButton() {
     return (

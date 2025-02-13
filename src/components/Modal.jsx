@@ -1,11 +1,11 @@
 import { cloneElement, useContext, useState, createContext } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import Button from "./Button";
 import StyledLabel from "./Label";
 import useOutsideModal from "../hooks/useOutsideModal";
-import { useDropdownMenuOpeningContext } from "../context/DropdownMenuOpeningContext";
 import useIsMobile from "../hooks/useIsMobile";
+import { toggleDropdown, toggleModal, closeAll } from "../features/contact/redux/UiSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Overlay = styled.div`
     position: fixed;
@@ -44,29 +44,22 @@ const ModalLayout = styled.div`
     width: 100%;
     height: 100%;
 `
-const ModalContext = createContext()
 
 function Modal({children}) {
-    const [openName, setOpenName] = useState("")
-    const open = setOpenName
-    const closeModal = () => {
-        setOpenName(() => "")
-    }
-
     return (
-        <ModalContext.Provider value={{openName, closeModal, open}}>
-            {children}
-        </ModalContext.Provider>
+        <>
+        {children}
+        </>
     )
-
 }
 
 function Open({children, name}) {
-    const {open} = useContext(ModalContext)
-    
+
+    const dispatch = useDispatch()
 
     const handleOpenModal = () => {
-        open(() => name)
+        // console.log("Hello")
+        dispatch(toggleModal(name))
     }
     return cloneElement(children, { onClick: handleOpenModal})
     
@@ -74,11 +67,12 @@ function Open({children, name}) {
 
 function Window({children, title, name}) {
 
-    const {openName, closeModal} = useContext(ModalContext)
-    const ref = useOutsideModal(closeModal)
+    const modalOpen = useSelector((store) => store.ui.modalOpen)
+    const ref = useOutsideModal()
+    const dispatch = useDispatch()
 
     const isMobile = useIsMobile()
-    if (openName !== name) return null
+    if (modalOpen !== name) return null
 
     return createPortal(
         <Overlay>
@@ -86,7 +80,7 @@ function Window({children, title, name}) {
             <ModalWindow isMobile={`${isMobile}`}>
                 <Header>
                     <StyledLabel size="large" color="white" weight="bold">{title}</StyledLabel>
-                    <StyledLabel color="white" weight="bold" onClick={closeModal}>X</StyledLabel>
+                    <StyledLabel color="white" weight="bold" onClick={() => dispatch(closeAll())}>X</StyledLabel>
                 </Header>
                 <Content>
                     {cloneElement(children)}
@@ -97,12 +91,6 @@ function Window({children, title, name}) {
         document.body
     )
 }
-
-export function useModalContext() {
-    const context = useContext(ModalContext)
-    if (!context) throw new Error("Modal Context is used outside of provider.")
-    return context
-} 
 
 Modal.Open = Open
 Modal.Window = Window

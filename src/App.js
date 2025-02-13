@@ -1,13 +1,8 @@
-import logo from './logo.svg';
-import ContactList from './features/contact/ContactList';
 import styled from 'styled-components';
 import './App.css';
 import ContactLayout from './features/contact/ContactLayout';
 import GlobalStyle from "./GlobalStyle"
-import Label from "../src/ui/Label"
-import Search from './features/contact/Search';
-import ContactProvider from './context/ContactContext';
-import DropdownMenuOpeningContextProvider from './context/DropdownMenuOpeningContext';
+import Label from "./components/Label"
 import mediaQueryBreakpoint from './utils/mediaQuery';
 const StyledContainerParent = styled.div`
   display: flex;
@@ -44,11 +39,7 @@ function App() {
       <GlobalStyle/>
         <StyledContainer>
           <Label size="extralarge" weight="bold">My Address Book</Label>
-          <ContactProvider>
-            <DropdownMenuOpeningContextProvider>
-              <ContactLayout></ContactLayout>
-            </DropdownMenuOpeningContextProvider>
-          </ContactProvider>
+            <ContactLayout></ContactLayout>
         </StyledContainer>
 
     

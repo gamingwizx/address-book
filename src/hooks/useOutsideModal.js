@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import { useDropdownMenuOpeningContext } from "../context/DropdownMenuOpeningContext";
-
-export default function useOutsideModal(handler, useCapture = true) {
+import { closeAll } from "../features/contact/redux/UiSlice";
+import { useDispatch } from "react-redux";
+export default function useOutsideModal(useCapture = true) {
 
     const ref = useRef()
-    const {closeDropdownList} = useDropdownMenuOpeningContext()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const handleClickOutsideModal = (e) => {
             if (ref.current && ref.current.contains(e.target)) {
-                handler()
-                closeDropdownList()
+                dispatch(closeAll())
             }
         }
 

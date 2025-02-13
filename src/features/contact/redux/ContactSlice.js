@@ -1,6 +1,5 @@
-import { createReducer, createSelector, createSlice } from "@reduxjs/toolkit";
-import { getCurrentPage, getItemsPerPage } from "./paginationSlice";
-import data from "../../data.json"
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import data from "../../../data.json"
 
 const intialState = {
     contactList: data,
@@ -21,6 +20,7 @@ const contactSlice = createSlice({
             state.contactList = state.contactList.map((contact) => contact.id === action.payload.id ? action.payload : contact)
         },
         deleteContact: (state,action) => {
+            console.log(action.payload)
             state.contactList = state.contactList.filter((contact) => contact.id !== action.payload)
         },
     }
@@ -28,12 +28,14 @@ const contactSlice = createSlice({
 
 export const filteredContactList = createSelector([(state) => state.contact.contactList, (state) => state.contact.searchKeyword],
 (contactList, searchKeyword) => {
-
     return contactList.filter(contact => {
-        return (contact.email.toLowerCase().includes(searchKeyword) || contact.phone.toLowerCase().includes(searchKeyword) || contact.address.toLowerCase().includes(searchKeyword) || (contact.name.toLowerCase().includes(searchKeyword)))})
+        return (contact.email.toLowerCase().includes(searchKeyword) || contact.phone.toLowerCase().includes(searchKeyword) || contact.address.toLowerCase().includes(searchKeyword) || (contact.name.toLowerCase().includes(searchKeyword)))
+    })
     
 
 })
+
+export const contactListLength = createSelector((state) => state.contact.contactList, (contactListLength) => {return contactListLength.length})
 
 export const {search, nextPage, previousPage, jumpToPage, addNewContact, updateContact, deleteContact} = contactSlice.actions
 export default contactSlice.reducer

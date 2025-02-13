@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { filteredContactList } from "./ContactSlice";
+import { filteredContactList } from "../redux/ContactSlice";
 
 const totalPage = createSelector([filteredContactList, (state) => state.pagination.itemsPerPage], 
     (filteredContacts, itemsPerPage) => {

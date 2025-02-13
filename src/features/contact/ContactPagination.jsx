@@ -1,13 +1,12 @@
 import styled, {css} from "styled-components"
-import usePage from "../../hooks/usePage"
 import { useDispatch, useSelector } from "react-redux"
-import {nextPage, previousPage, jumpToPage} from "./paginationSlice"
+import {nextPage, previousPage, jumpToPage} from "./redux/paginationSlice"
 import mediaQueryBreakpoint from "../../utils/mediaQuery"
-import { getPages } from "./PaginationSelector"
-import totalPage from "./TotalPageSelector"
+import { getPages } from "./redux/PaginationSelector"
+import totalPage from "./redux/TotalPageSelector"
 
 const setActiveStyle = (isActive) => {
-        if (isActive) return css`
+        if (isActive === 'true') return css`
         background-color: var(--primary-color);
         color: white;
     `
@@ -55,7 +54,7 @@ export default function ContactPagination() {
         <StyledPaginationLayout>
             <StyledPageButton onClick={() => currentPage !== 1 && dispatch(previousPage())}>&lt;</StyledPageButton>
             {pages.map((page) => (
-                <StyledPageButton onClick={() => dispatch(jumpToPage(page))} active={currentPage===page} key={page}>{page}</StyledPageButton>
+                <StyledPageButton onClick={() => dispatch(jumpToPage(page))} active={`${currentPage===page}`} key={page}>{page}</StyledPageButton>
 
             ))}
             <StyledPageButton onClick={() => !isLastPage && dispatch(nextPage())}>&gt;</StyledPageButton>

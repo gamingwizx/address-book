@@ -1,12 +1,11 @@
 import styled from "styled-components"
 
 import Contact from "./Contact"
-import { useContactContext } from "../../context/ContactContext"
-import DropdownMenuOpeningContextProvider from "../../context/DropdownMenuOpeningContext"
 import { useSelector } from "react-redux"
-import useFilteredItems from "../../hooks/useFilteredItems"
 import mediaQueryBreakpoint from "../../utils/mediaQuery"
-import { filteredContactList } from "./ContactSelector"
+import { filteredContactListForDisplay } from "./redux/ContactSelector"
+import DropdownMobileContextProvider from "./context/DropdownMobileContext"
+import StyledLabel from "../../components/Label"
 const StyledContactList = styled.div`
     grid-area: contactList;
     display: flex;
@@ -18,12 +17,17 @@ const StyledContactList = styled.div`
 
 export default function ContactList() {
     
-    const filteredContact = useSelector(filteredContactList)
+    const contactList = useSelector(filteredContactListForDisplay)
+    const isContactsEmpty = contactList.length <= 0
     return (
-        <StyledContactList>
-                {filteredContact.map(contact => (
-                    <Contact contactInfo={contact} key={contact.id}/>
-                ))}
-        </StyledContactList>
+        <DropdownMobileContextProvider>
+            <StyledContactList>
+                {isContactsEmpty && <StyledLabel>You have no contacts, start adding one now!</StyledLabel>}
+                    {contactList.map(contact => (
+                        <Contact contactInfo={contact} key={contact.id}/>
+                    ))}
+            </StyledContactList>
+
+        </DropdownMobileContextProvider>
     )
 }

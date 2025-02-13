@@ -1,5 +1,4 @@
 import { createSelector, createSlice, current } from "@reduxjs/toolkit"
-import { filteredContactList } from "./ContactSelector"
 const initialState = {
     currentPage: 1,
     itemsPerPage: 3,

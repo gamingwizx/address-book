@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Img from "../../ui/Img";
 
 import mediaQueryBreakpoint from "../../utils/mediaQuery";
 
@@ -16,7 +15,6 @@ const StyledButton = styled.button`
 
     @media (max-width: ${mediaQueryBreakpoint.large}) {
         background-size: 1.5rem;
-        // padding: calc(var(--spacing) / 1.5) calc(var(--spacing) * 2);
     }
     @media (max-width: ${mediaQueryBreakpoint.extraSmall}) {
         width: 3rem;

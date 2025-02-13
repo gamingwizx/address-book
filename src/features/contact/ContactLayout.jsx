@@ -1,10 +1,7 @@
 import styled from "styled-components"
 import ContactList from "./ContactList"
 import ContactHeader from "./ContactHeader"
-import ContactProvider from "../../context/ContactContext"
-import Modal from "../../ui/Modal"
 import ContactPagination from "./ContactPagination"
-import DropdownMenuOpeningContextProvider from "../../context/DropdownMenuOpeningContext"
 const StyledContactLayout = styled.div`
     // display: flex;
     // flex-direction: column;

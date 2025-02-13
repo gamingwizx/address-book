@@ -1,13 +1,15 @@
 import styled from "styled-components"
 
-import Label from "../../ui/Label"
-import { useDropdownMenuOpeningContext } from "../../context/DropdownMenuOpeningContext"
+import Label from "../../components/Label"
 
 import useIsMobile from "../../hooks/useIsMobile"
 import DropdownMenuDesktop from "./DropdownMenuDesktop"
 
 import mediaQueryBreakpoint from "../../utils/mediaQuery"
 import PopupMobile from "./PopupMobile"
+import { useDispatch, useSelector } from "react-redux"
+import { closeAll, toggleDropdownToggleShow } from "./redux/UiSlice"
+import { useDropdownMobileContext } from "./context/DropdownMobileContext"
 
 const StyledContactInfo = styled.div`
     display: grid;
@@ -61,6 +63,8 @@ const StyledContact = styled.div`
         flex-direction: column;
         height: 25vh;
         padding: calc(var(--spacing) / 2);
+
+        gap: calc(var(--spacing) / 2);
     }
 `
 const StyledContactPicture = styled.div`
@@ -74,10 +78,11 @@ const StyledContactPicture = styled.div`
         object-fit: cover;
         width: 0%;
         height: 0%;
-        }
+    }
         
     @media (max-width: ${mediaQueryBreakpoint.extraSmall}) {
         flex-basis: 60%;
+        background-size: 100%;
     }
     
 `
@@ -93,14 +98,30 @@ const StyledContactInfoLayout = styled.div`
 
 export default function Contact({contactInfo}) {
     const {id, name, email, phone, address} = contactInfo
+    const dispatch = useDispatch()
+
+    /*Dropdown on mobile is handled with context because the value for `isShowMobileDropdown` would be overwritten with false by other contact component,
+      causing the dropdown to not show.
+    */
+    const {activeDropdown, onHover} = useDropdownMobileContext()
 
     const isMobile = useIsMobile()
     
-    const {activeDropdown, onHover} = useDropdownMenuOpeningContext()
-    const isShowDropdown = activeDropdown === id
+    const dropdownToggleShow = useSelector((store) => store.ui.dropdownToggleShow)
+    
+    const isShowDropdown = dropdownToggleShow === id.toString()
+    const isShowMobileDropdown = activeDropdown === id.toString()
+
+    const handleMouseEnter = () => {
+        dispatch(toggleDropdownToggleShow(id.toString()))
+        onHover(id.toString())
+    }
+    const handleMouseLeave = () => {
+        dispatch(closeAll())
+    }
 
     return (
-        <StyledContact onMouseEnter={() => onHover(id)}>
+        <StyledContact onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <StyledContactPicture/>
             <StyledContactInfoLayout>
                 <Label size="large" color="primary" weight="bold">{name}</Label>
@@ -122,7 +143,7 @@ export default function Contact({contactInfo}) {
                 <DropdownMenuDesktop contactInfo={contactInfo} name={id} />
             </StyledDropdownMenuContainer>
             }
-            {(isShowDropdown && isMobile) && 
+            {(isShowMobileDropdown && isMobile) && 
             <PopupMobile contactInfo={contactInfo}/>}
             
         </StyledContact>

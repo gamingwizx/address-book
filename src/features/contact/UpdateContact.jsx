@@ -1,12 +1,11 @@
 import styled from "styled-components"
 import { useState } from "react"
-import StyledLabel from "../../ui/Label"
-import { useModalContext } from "../../ui/Modal"
-import { useDropdownMenuOpeningContext } from "../../context/DropdownMenuOpeningContext"
-import { updateContact } from "./ContactSlice"
+import StyledLabel from "../../components/Label"
+import { updateContact } from "./redux/ContactSlice"
 import { useDispatch } from "react-redux"
-import Button from "./components/Button"
-
+import Button from "../../components/Button"
+import { closeAll } from "./redux/UiSlice"
+import { useDropdownMobileContext } from "./context/DropdownMobileContext"
 
 const StyledAddNewContact = styled.div`
 
@@ -53,13 +52,11 @@ function UpdateContact({contactInfo}) {
     const [updatedEmail, setUpdatedEmail] = useState(() => email)
     const [updatedPhone, setUpdatedPhone] = useState(() => phone)
     const [updatedAddress, setUpdatedAddress] = useState(() => address)
-    const {close} = useModalContext()
     
+    const {closeDropdownList} = useDropdownMobileContext()
+
     const dispatch = useDispatch()
-
     
-    const {closeDropdownList} = useDropdownMenuOpeningContext()
-
     const handleSubmit = (e) => {
         e.preventDefault()
         const newContactNumber = {
@@ -70,8 +67,8 @@ function UpdateContact({contactInfo}) {
             address: updatedAddress
         }
         dispatch(updateContact(newContactNumber))
+        dispatch(closeAll())
         closeDropdownList()
-        close()
     }
     return (
         <StyledAddNewContact>
@@ -93,7 +90,7 @@ function UpdateContact({contactInfo}) {
                     <StyledFormInput defaultValue={address} onChange={(e) => setUpdatedAddress(e.target.value)}></StyledFormInput>
                 </StyledFormRow>
                 <StyledButtonRow>
-                    <Button onClick={close} theme="secondary">Cancel</Button>
+                    <Button onClick={() => dispatch(closeAll())} theme="secondary">Cancel</Button>
                     <Button>Update Contact</Button>
                 </StyledButtonRow>
             </StyledForm>

@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useDropdownMenuOpeningContext } from "../context/DropdownMenuOpeningContext";
-
+import { toggleDropdown } from "../features/contact/redux/UiSlice";
+import { useDispatch, useSelector } from "react-redux";
 const DROP_DOWN_MENU_WIDTH = "10"
 const StyledDropdownMenu = styled.ul`
     background-color: white;
@@ -17,18 +17,6 @@ const StyledDropdownMenu = styled.ul`
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
 
 `
-const StyledDropdownOption = styled.li`
-    background-color: white;
-    color: black;
-    list-style-type: none;
-    font-weight: bold;
-    font-size: 1em;
-    width: 100%;
-    padding: var(--spacing);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing);
-`
 const StyledButton = styled.button`
     display: flex;
     background: none;
@@ -39,9 +27,6 @@ const StyledButton = styled.button`
     border: none;
     width: 100%;
     height: 3rem;
-`
-const StyledOptionLabel = styled.label`
-    color: ${(props) => props.color};
 `
 
 const DropdownMenuContext = createContext()
@@ -59,18 +44,15 @@ function DropdownMenu({children}) {
 }
 function Open({name, id}) {
 
-    const {open, setPosition} = useContext(DropdownMenuContext)
-    const {openDropdownList} = useDropdownMenuOpeningContext()
-    useEffect(() => {
-        openDropdownList(id)
-    }, [])
+    const {setPosition} = useContext(DropdownMenuContext)
+    const dispatch = useDispatch()
 
     const handleOpen = (e) => {
         const rect = e.target.closest("button").getBoundingClientRect()
         const x = rect.left - 16 * DROP_DOWN_MENU_WIDTH
         const y = rect.y
         setPosition(() => { return {x,y}})
-        open(() => name)
+        dispatch(toggleDropdown(name))
     }
     
     return (
@@ -81,9 +63,10 @@ function Open({name, id}) {
 function Window({children, name}) {
 
 
-    const {openName, position} = useContext(DropdownMenuContext)
-    if (openName !== name) return null
+    const {position} = useContext(DropdownMenuContext)
+    const dropdownOpen = useSelector((store) => store.ui.dropdownOpen)
 
+    if (dropdownOpen !== name) return null
     return createPortal(
         <StyledDropdownMenu id="dropdown-menu" x={position.x} y={position.y}>
             {children}

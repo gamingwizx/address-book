@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import Modal from "../../ui/Modal"
-import Img from "../../ui/Img"
+import Modal from "../../components/Modal"
+import Img from "../../components/Img"
 import UpdateContact from "./UpdateContact"
 import DeleteContact from "./DeleteContact"
-import { useDropdownMenuOpeningContext } from "../../context/DropdownMenuOpeningContext"
-import StyledLabel from "../../ui/Label"
+import { useDispatch } from "react-redux"
+import { useDropdownMobileContext } from "./context/DropdownMobileContext"
 const StyledBackdrop = styled.div`
     background-color: black;
     opacity: 0.5;
@@ -27,8 +27,9 @@ const StyledMobilePopup = styled.div`
     flex-direction: column;
 `
 const StyledMobilePopupOption = styled.div`
-    flex-basis: 50%;
+    flex-basis: 20%;
     flex-grow: 1;
+    flex: 0 1 200px;
     padding: var(--spacing);
     display: flex;
     align-items: center;
@@ -38,11 +39,12 @@ const StyledOptionLabel = styled.label`
     color: ${(props) => props.color};
 `
 export default function PopupMobile({contactInfo}) {
-    const {closeDropdownList} = useDropdownMenuOpeningContext()
+
+    const {closeDropdownList} = useDropdownMobileContext()
 
     return (
         <>
-            <StyledBackdrop onClick={closeDropdownList}/>
+            <StyledBackdrop onClick={() => closeDropdownList()}/>
             <StyledMobilePopup>
                 <Modal>
                     <Modal.Open name="update-mobile">

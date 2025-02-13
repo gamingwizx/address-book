@@ -1,15 +1,11 @@
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 import { useState } from "react"
-import StyledLabel from "../../ui/Label"
-import { useModalContext } from "../../ui/Modal"
-import { useContactContext } from "../../context/ContactContext"
-import { addNewContact } from "./ContactSlice"
-import { useDispatch } from "react-redux"
-import Button from "./components/Button"
+import StyledLabel from "../../components/Label"
+import { addNewContact, contactListLength } from "./redux/ContactSlice"
+import { useDispatch, useSelector } from "react-redux"
+import Button from "../../components/Button"
+import { closeAll } from "./redux/UiSlice"
 
-const StyledAddNewContact = styled.div`
-
-`
 const StyledForm = styled.form`
     padding: var(--spacing);
     display: flex;
@@ -51,24 +47,23 @@ function AddNewContact() {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
-    const {close} = useModalContext()
-    const {contactListLength} = useContactContext()
+    const totalContacts = useSelector(contactListLength)
 
     const dispatch = useDispatch()
     const handleSubmit = (e) => {
         e.preventDefault()
         const newContactNumber = {
-            id: contactListLength,
+            id: totalContacts + 1,
             name,
             email,
             phone,
             address
         }
         dispatch(addNewContact(newContactNumber))
-        close()
+        dispatch(closeAll())
     }
     return (
-        <StyledAddNewContact>
+        <>
             <StyledForm onSubmit={handleSubmit}>
                 <StyledFormRow>
                     <StyledLabel>Name: </StyledLabel>
@@ -87,11 +82,11 @@ function AddNewContact() {
                     <StyledFormInput onChange={(e) => setAddress(e.target.value)}></StyledFormInput>
                 </StyledFormRow>
                 <StyledButtonRow>
-                    <Button onClick={close} theme="secondary">Cancel</Button>
+                    <Button onClick={closeAll} theme="secondary">Cancel</Button>
                     <Button>Create New Contact</Button>
                 </StyledButtonRow>
             </StyledForm>
-        </StyledAddNewContact>
+        </>
     )
 }
 

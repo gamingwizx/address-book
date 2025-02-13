@@ -1,12 +1,13 @@
 import styled, {css} from "styled-components"
-import StyledLabel from "../../ui/Label"
-import { useModalContext } from "../../ui/Modal"
-import Button from "./components/Button"
+import StyledLabel from "../../components/Label"
+import Button from "../../components/Button"
 
-import { useDropdownMenuOpeningContext } from "../../context/DropdownMenuOpeningContext"
-
-import { deleteContact } from "./ContactSlice"
-import { useDispatch } from "react-redux"
+import { deleteContact } from "./redux/ContactSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { closeAll } from "./redux/UiSlice"
+import { jumpToPage } from "./redux/paginationSlice"
+import LastPageSelector from "./redux/LastPageSelector"
+import { useDropdownMobileContext } from "./context/DropdownMobileContext"
 
 const StyledForm = styled.form`
     padding: var(--spacing);
@@ -46,17 +47,17 @@ const StyledButtonRow = styled.div`
 
 function DeleteContact({contactInfo}) {
     const {id, name, email, phone, address} = contactInfo
+
+    const {closeDropdownList} = useDropdownMobileContext()
     
-    const {close} = useModalContext()
-    
-    const {closeDropdownList} = useDropdownMenuOpeningContext()
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(deleteContact(id))
+        dispatch(jumpToPage(1))
+        dispatch(closeAll())
         closeDropdownList()
-        close()
     }
     return (
         <>
@@ -78,7 +79,7 @@ function DeleteContact({contactInfo}) {
                     <StyledFormInput defaultValue={address} disabled></StyledFormInput>
                 </StyledFormRow>
                 <StyledButtonRow>
-                    <Button onClick={close} theme="secondary">Cancel</Button>
+                    <Button onClick={() => dispatch(closeAll())} theme="secondary">Cancel</Button>
                     <Button theme="warning">Delete Contact</Button>
                 </StyledButtonRow>
             </StyledForm>
