@@ -44,22 +44,32 @@ const ModalLayout = styled.div`
     width: 100%;
     height: 100%;
 `
+const ModalMobileContext = createContext()
 
 function Modal({children}) {
+    const [modalOpened, setModalOpened] = useState("")
+    const onModalOpened = (id) => {
+        setModalOpened(id)
+    }
+    const closeModalMobile = () => {
+        setModalOpened("")
+    }
+
     return (
-        <>
-        {children}
-        </>
+        <ModalMobileContext.Provider value={{modalOpened, onModalOpened, closeModalMobile}}>
+            {children}
+        </ModalMobileContext.Provider>
     )
 }
 
 function Open({children, name}) {
 
     const dispatch = useDispatch()
+    const {onModalOpened} = useContext(ModalMobileContext)
 
     const handleOpenModal = () => {
-        // console.log("Hello")
         dispatch(toggleModal(name))
+        onModalOpened(name)
     }
     return cloneElement(children, { onClick: handleOpenModal})
     
@@ -67,12 +77,16 @@ function Open({children, name}) {
 
 function Window({children, title, name}) {
 
-    const modalOpen = useSelector((store) => store.ui.modalOpen)
+    const closeModal = () => {
+        closeModalMobile()
+        dispatch(closeAll())
+    }
     const ref = useOutsideModal()
     const dispatch = useDispatch()
+    const {modalOpened, closeModalMobile} = useContext(ModalMobileContext)
 
     const isMobile = useIsMobile()
-    if (modalOpen !== name) return null
+    if (modalOpened !== name) return null
 
     return createPortal(
         <Overlay>
@@ -80,7 +94,7 @@ function Window({children, title, name}) {
             <ModalWindow isMobile={`${isMobile}`}>
                 <Header>
                     <StyledLabel size="large" color="white" weight="bold">{title}</StyledLabel>
-                    <StyledLabel color="white" weight="bold" onClick={() => dispatch(closeAll())}>X</StyledLabel>
+                    <StyledLabel color="white" weight="bold" onClick={() => closeModal()}>X</StyledLabel>
                 </Header>
                 <Content>
                     {cloneElement(children)}
@@ -90,6 +104,12 @@ function Window({children, title, name}) {
         </Overlay>,
         document.body
     )
+}
+
+export function useModalMobileOpen() {
+    const context = useContext(ModalMobileContext)
+    if (!context) throw new Error("Values in modal mobile context is used outside of the scope.")
+    return context
 }
 
 Modal.Open = Open

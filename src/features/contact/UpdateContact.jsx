@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import Button from "../../components/Button"
 import { closeAll } from "./redux/UiSlice"
 import { useDropdownMobileContext } from "./context/DropdownMobileContext"
+import { useModalMobileOpen } from "../../components/Modal"
 
 const StyledAddNewContact = styled.div`
 
@@ -54,9 +55,15 @@ function UpdateContact({contactInfo}) {
     const [updatedAddress, setUpdatedAddress] = useState(() => address)
     
     const {closeDropdownList} = useDropdownMobileContext()
+    const {closeModalMobile} = useModalMobileOpen()
 
     const dispatch = useDispatch()
     
+    const closeModal = () => {
+        dispatch(closeAll())
+        closeDropdownList()
+        closeModalMobile()
+    }
     const handleSubmit = (e) => {
         e.preventDefault()
         const newContactNumber = {
@@ -67,8 +74,7 @@ function UpdateContact({contactInfo}) {
             address: updatedAddress
         }
         dispatch(updateContact(newContactNumber))
-        dispatch(closeAll())
-        closeDropdownList()
+        closeModal()
     }
     return (
         <StyledAddNewContact>
@@ -90,7 +96,7 @@ function UpdateContact({contactInfo}) {
                     <StyledFormInput defaultValue={address} onChange={(e) => setUpdatedAddress(e.target.value)}></StyledFormInput>
                 </StyledFormRow>
                 <StyledButtonRow>
-                    <Button onClick={() => dispatch(closeAll())} theme="secondary">Cancel</Button>
+                    <Button onClick={() => closeModal()} theme="secondary">Cancel</Button>
                     <Button>Update Contact</Button>
                 </StyledButtonRow>
             </StyledForm>

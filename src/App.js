@@ -39,7 +39,8 @@ function App() {
       <GlobalStyle/>
         <StyledContainer>
           <Label size="extralarge" weight="bold">My Address Book</Label>
-            <ContactLayout></ContactLayout>
+          <ContactLayout></ContactLayout>
+              
         </StyledContainer>
 
     
